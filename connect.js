@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
-
+const dotenv = require("dotenv");
+dotenv.config();
 const connectDB = async () => {
+  const URL = process.env.MONGO_URL;
   try {
-    mongoose.connect("mongodb://127.0.0.1:27017/url-shortner");
+    mongoose.connect(URL);
   } catch (error) {
     console.error("something wrong with DB");
   }
