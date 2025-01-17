@@ -5,28 +5,32 @@ const handlecreateurl = async (req, res) => {
   try {
     const { url } = req.body;
 
-    const shortId = nanoid(8);
+    if (url) {
+      const shortId = nanoid(8);
 
-    const shorturlCreate = await urlModel.create({
-      shortid: shortId,
-      redirect_url: url,
-      visitorHistory: [],
-    });
-    shorturlCreate.save();
-    return res.status(201).send({ msg: "url is shorted", shorturlCreate });
+      const shorturlCreate = await urlModel.create({
+        shortid: shortId,
+        redirect_url: url,
+        visitorHistory: [],
+      });
+      shorturlCreate.save();
+      return res.status(201).send({ msg: "url is shorted", shorturlCreate });
+    } else {
+      res.status(500).send({ msg: "url is not present" });
+    }
   } catch (error) {
     return res
-      .statu(500)
+      .status(500)
       .send({ msg: "something went wrong with handlecreateurl", error });
   }
 };
 
 const handlegeturl = async (req, res) => {
   try {
-    const shortId = req.params.id;
-
+    const id = req.params.id;
+    console.log(id);
     const geturls = await urlModel.findOneAndUpdate(
-      { shortid: shortId },
+      { shortid: id },
       {
         $push: {
           visitorHistory: { timestamps: Date.now() },
