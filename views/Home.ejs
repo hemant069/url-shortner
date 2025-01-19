@@ -10,9 +10,17 @@
 <body>
     <h1>Hello from server</h1>
     <ul>
-        <% urls.forEach(function(url){ %>
-            <% url.shortid%>
-                <% }); %>
+        <% urls.forEach(function(url) { %>
+            <div>
+                <strong>
+                    <%= url.shortid %>
+                </strong>
+                <%=url.redirect_url%>
+                    <div>
+                        <%=url.visitorHistory.length%>
+                    </div>
+            </div>
+            <% }); %>
     </ul>
 </body>
 
