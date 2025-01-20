@@ -9,23 +9,44 @@
 
 <body>
     <h1>Hello from server</h1>
-    <ul>
-        <% urls.forEach(function(url) { %>
-            <div style="display: flex ; justify-content:space-around  ; align-items: center;">
-                <strong>
-                    <%= url.shortid %>
-                </strong>
-                <div>
-                    <strong> Redirect Url</strong>
-                    <%=url.redirect_url%>
+
+    <div style="margin: 20px;">
+        <form action="/api" method="post">
+            <input type="text" name="url" placeholder="enter the url">
+            <button type="submit">Generate</button>
+        </form>
+    </div>
+
+    <div>
+        <% if (locals.shortid) { %>
+            http://localhost:8000<%=shortid %>
+
+                <% } %>
+    </div>
+    <div>
+        <% if (locals.urls) { %>
+            <% urls.forEach(element=> { %>
+                <div style="display: flex; justify-content: space-around; align-items: center; text-align: center;">
+
+                    <div>
+                        <strong>
+                            <%= element.shortid %>
+                        </strong>
+                    </div>
+                    <div>
+                        <strong>
+                            <%= element.redirect_url %>
+                        </strong>
+                    </div>
+                    <div>
+                        <strong>
+                            <%= element.visitorHistory.length %>
+                        </strong>
+                    </div>
                 </div>
-                <div>
-                    <strong>Visitory History Click -></strong>
-                    <%=url.visitorHistory.length%>
-                </div>
-            </div>
-            <% }); %>
-    </ul>
+                <% }) %>
+                    <% } %>
+    </div>
 </body>
 
 </html>

@@ -26,6 +26,6 @@ connectDB()
 // Router is Here
 app.use("/", staticRoute);
 app.use("/api", urlShortRoute);
-app.use("api/user", userRoute);
+app.use("/user", userRoute);
 
 app.listen(PORT, () => console.log("server is connected "));

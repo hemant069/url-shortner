@@ -14,7 +14,8 @@ const handlecreateurl = async (req, res) => {
         visitorHistory: [],
       });
       shorturlCreate.save();
-      return res.status(201).send({ msg: "url is shorted", shorturlCreate });
+      return res.render("Home", { shortId });
+      // return res.status(201).send({ msg: "url is shorted", shorturlCreate });
     } else {
       res.status(500).send({ msg: "url is not present" });
     }
