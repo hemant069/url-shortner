@@ -11,15 +11,17 @@
     <h1>Hello from server</h1>
     <ul>
         <% urls.forEach(function(url) { %>
-            <div>
+            <div style="display: flex ; justify-content:space-around  ; align-items: center;">
                 <strong>
                     <%= url.shortid %>
                 </strong>
                 <div>
-                    Redirect Url <%=url.redirect_url%>
+                    <strong> Redirect Url</strong>
+                    <%=url.redirect_url%>
                 </div>
                 <div>
-                    Visitory History Click -> <%=url.visitorHistory.length%>
+                    <strong>Visitory History Click -></strong>
+                    <%=url.visitorHistory.length%>
                 </div>
             </div>
             <% }); %>
