@@ -9,6 +9,7 @@ const handleUserSignup = async (req, res) => {
     await newuser.save();
 
     return res.json({ msg: "user is created successfully", newuser });
+    return res.render("Home");
   } catch (error) {
     return res.json({ msg: "somthing wrong with handlecreateuser", error });
   }
