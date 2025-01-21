@@ -30,7 +30,7 @@ const handlecreateurl = async (req, res) => {
 const handlegeturl = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(id);
+
     const geturls = await urlModel.findOneAndUpdate(
       { shortid: id },
       {
@@ -53,7 +53,7 @@ const handlegetanalytics = async (req, res) => {
     const shortid = req.params.id;
 
     const analytics = await urlModel.findOne({ shortid });
-    console.log(analytics);
+
     return res.status(200).send({
       totalanalytics: analytics.visitorHistory.length,
       visitor: analytics.visitorHistory,

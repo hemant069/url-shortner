@@ -6,8 +6,6 @@ const handleUserSignup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    console.log(name, email, password);
-
     const newuser = await userModel({ name, email, password });
 
     await newuser.save();
@@ -21,20 +19,19 @@ const handleUserSignup = async (req, res) => {
 const handleUserLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
-    const user = await userModel.findOne({ email, password });
 
-    console.log(user);
+    const user = await userModel.findOne({ email, password });
 
     if (!user) {
       return res.render("login", {
         error: "Invaild email and password",
       });
     }
-    const sessionId = uuidv4();
+    // const sessionId = uuidv4(); //remove the uuid for the jwt
 
-    setSessionId(sessionId, user);
-    res.cookie("uid", sessionId);
+    const token = setSessionId(user);
+
+    res.cookie("uid", token);
     return res.redirect("/");
   } catch (error) {
     return res.json({ msg: "invaild error" });
