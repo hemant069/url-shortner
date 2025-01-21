@@ -4,7 +4,9 @@ const urlModel = require("../models/url-shorter.model");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const urls = await urlModel.find({});
+  const user = req.user;
+  if (!user) return res.redirect("/login");
+  const urls = await urlModel.find({ createdBy: req.user._id });
 
   return res.render("Home", { urls });
 });

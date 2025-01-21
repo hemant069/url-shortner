@@ -12,6 +12,7 @@ const handlecreateurl = async (req, res) => {
         shortid: shortId,
         redirect_url: url,
         visitorHistory: [],
+        createdBy: req.user._id,
       });
       shorturlCreate.save();
       return res.render("Home", { shortId });

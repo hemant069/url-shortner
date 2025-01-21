@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require("uuid");
+const { getSessionId, setSessionId } = require("../service/index");
 const userModel = require("../models/user.model");
 
 const handleUserSignup = async (req, res) => {
@@ -9,7 +11,7 @@ const handleUserSignup = async (req, res) => {
     const newuser = await userModel({ name, email, password });
 
     await newuser.save();
-    return res.render("Home");
+    return res.render("Login");
     // return res.json({ msg: "user is created successfully", newuser });
   } catch (error) {
     return res.json({ msg: "somthing wrong with handlecreateuser", error });
@@ -20,7 +22,7 @@ const handleUserLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     console.log(email, password);
-    const user = await userModel.findOne({ email });
+    const user = await userModel.findOne({ email, password });
 
     console.log(user);
 
@@ -29,7 +31,11 @@ const handleUserLogin = async (req, res) => {
         error: "Invaild email and password",
       });
     }
-    return res.render("Home");
+    const sessionId = uuidv4();
+
+    setSessionId(sessionId, user);
+    res.cookie("uid", sessionId);
+    return res.redirect("/");
   } catch (error) {
     return res.json({ msg: "invaild error" });
   }
