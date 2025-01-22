@@ -8,7 +8,7 @@ const cookie = require("cookie-parser");
 const ejs = require("ejs");
 const path = require("path");
 const urlModel = require("./models/url-shorter.model");
-const { restrictToLoggedinUserOnly, CheckAuth } = require("./middleware");
+const { restrictTo, checkForAuthentication } = require("./middleware");
 const app = express();
 const PORT = 8000;
 
@@ -27,9 +27,14 @@ connectDB()
   .then(() => console.log("DB is connected"))
   .catch((error) => console.log("something wrong with connectDB function "));
 
+// Middleware
+
+app.use(checkForAuthentication);
+
 // Router is Here
-app.use("/", CheckAuth, staticRoute);
-app.use("/api", restrictToLoggedinUserOnly, urlShortRoute);
+
+app.use("/", staticRoute);
+app.use("/api", restrictTo(["NORMAL"]), urlShortRoute);
 app.use("/user", userRoute);
 
 app.listen(PORT, () => console.log("server is connected "));
