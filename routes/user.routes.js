@@ -31,8 +31,11 @@ const handleUserLogin = async (req, res) => {
 
     const token = setSessionId(user);
 
-    res.cookie("uid", token);
-    return res.redirect("/");
+    // console.log(token);
+
+    // res.cookie("uid", token);
+    // return res.redirect("/");
+    return res.json({ token });
   } catch (error) {
     return res.json({ msg: "invaild error" });
   }
